@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>High CPU Usage Demo</title>
+  <style>
+    /* Set background color to white */
+    body {
+      background-color: white;
+      font-family: Arial, sans-serif;
+      color: #333;
+      padding: 20px;
+    }
+
+    #cpuUsage {
+      margin-top: 20px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>High CPU Usage Demo</h1>
+  <button onclick="startHighCPU()">Start High CPU Task</button>
+  <button onclick="stopHighCPU()">Stop High CPU Task</button>
+
+  <script>
+    let cpuTask; // Variable to hold the CPU task interval
+    let isRunning = false; // Flag to control CPU task
+    let startTime, endTime; // Variables to track CPU usage
+    
+    function startHighCPU() {
+      isRunning = true;
+      for (var a = 0; a < a + 1; a++) {
+        // Busy-wait to consume CPU
+        const calc = Math.pow(Math.random(), a);
+        console.log(a, calc);
+        if (!isRunning) {
+          break;
+        }
+      }
+    }
+
+    function stopHighCPU() {
+      isRunning = false;
+    }
+  </script>
+</body>
+
+</html>

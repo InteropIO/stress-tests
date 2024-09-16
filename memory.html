@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Memory Leak Demo</title>
+  <style>
+    /* Set background color to white */
+    body {
+      background-color: white;
+      font-family: Arial, sans-serif;
+      color: #333;
+      padding: 20px;
+    }
+    #memoryUsage {
+      margin-top: 20px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <h1>Memory Leak Demo</h1>
+  <p>Enter the rate of memory leak (objects per second):</p>
+  <input type="number" id="rateInput" value="100" min="1">
+  <button onclick="startLeak()">Start Memory Leak</button>
+
+  <script>
+    function leakMemory(rate) {
+      // Array to hold leaked objects
+      const leakedObjects = [];
+
+      // Function to create and store leaked objects
+      function leak() {
+        // Creating a large object to occupy memory
+        const largeObject = new Array(1000000).fill("leak");
+
+        // Pushing the object into the array to cause a memory leak
+        leakedObjects.push(largeObject);
+
+        // Repeat this function at a set interval to continue leaking
+        setTimeout(leak, 1000 / rate); // Rate controls the frequency of the leak
+      }
+
+      // Start the memory leak
+      leak();
+    }
+
+    function startLeak() {
+      const rate = document.getElementById("rateInput").value;
+      if (rate > 0) {
+        leakMemory(rate);
+        alert(`Memory leak started at a rate of ${rate} objects per second.`);
+        monitorMemoryUsage();
+      } else {
+        alert("Please enter a valid rate.");
+      }
+    }
+  </script>
+</body>
+</html>
